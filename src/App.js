@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css"
+import SearchBar from "./components/SearchBar/SearchBar"
+import VideoPlayer from "./components/VideoPlayer/VideoPlayer"
+import Logo from "./components/Logo/Logo"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+
+    const [videoId, setVideoId] = useState("");
+
+    const onSearchBarChange = (link) => {
+        getVideoId(link)
+    };
+
+    const getVideoId = (url) => {
+        const id = url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
+        if (id != null) {
+            setVideoId(id[1])
+
+        } else {
+
+        }
+    };
+
+    return (
+        <div className="app-container">
+            <Logo />
+            <SearchBar
+                onSearchBarChange={onSearchBarChange}
+            />
+            <VideoPlayer videoId={videoId} />
+        </div>
+    );
 }
 
 export default App;
